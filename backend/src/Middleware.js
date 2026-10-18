@@ -5,8 +5,7 @@ class Middleware
         this.apiKey = apiKey;
     }
 
-    run = (request, response, next) =>
-    {
+    run = (request, response, next) => {
         const apiKey = request.headers['x-api-key'];
 
         if (!apiKey || apiKey !== this.apiKey) {

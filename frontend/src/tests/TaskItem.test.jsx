@@ -15,7 +15,7 @@ describe('TaskItem component', () => {
 
     test('вызывается onDelete при клике на кнопку удаления', () => {
         const task = { id: 1, text: 'Выучить Vitest' };
-        const onDelete = vi.fn(); // Используем vi.fn() вместо jest.fn()
+        const onDelete = vi.fn();
 
         render(
             <TaskItem task={task} onDelete={onDelete} onUpdate={() => {}} />

@@ -4,6 +4,7 @@ import './index.css';
 
 import LayoutFooter from './class/layout/LayoutFooter.jsx';
 import LayoutHeader from './class/layout/LayoutHeader.jsx';
+import LayoutMain from './class/layout/LayoutMain.jsx';
 
 function App()
 {
@@ -74,7 +75,7 @@ function App()
     return (
         <div className='wrapper'>
             <LayoutHeader />
-            <main className='layout-section'>main</main>
+            <LayoutMain />
             <LayoutFooter />
         </div>
     );

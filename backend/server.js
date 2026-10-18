@@ -24,8 +24,7 @@ app.get(API, async (req, res) => {
     try {
         res.json(todoList.getAll());
     } catch (error) {
-        console.error('Error when receiving tasks', error.message);
-        res.status(500).json({ error: 'Error when requesting the API' });
+        handleApiError(res, error, 'Error when receiving tasks');
     }
 });
 
@@ -34,8 +33,7 @@ app.post(API, async (req, res) => {
         const newTask = todoList.add(req.body.text);
         res.status(201).json(newTask);
     } catch (error) {
-        console.error('Error when adding task', error.message);
-        res.status(500).json({ error: 'Error when requesting the API' });
+        handleApiError(res, error, 'Error when adding task');
     }
 });
 
@@ -46,8 +44,7 @@ app.delete(API + '/:id', async (req, res) => {
 
         res.sendStatus(204);
     } catch (error) {
-        console.error('Error when removing task', error.message);
-        res.status(500).json({ error: 'Error when requesting the API' });
+        handleApiError(res, error, 'Error when removing task');
     }
 });
 
@@ -62,14 +59,19 @@ app.put(API + '/:id', async (req, res) => {
 
         res.status(200).json(updatedTask);
     } catch (error) {
-        console.error('Task update error', error.message);
-        res.status(500).json({ error: 'Error when requesting the API' });
+        handleApiError(res, error, 'Task update error');
     }
 });
 
 app.listen(PORT, () => {
     console.log(`Server listens port: ${PORT}`);
 })
+
+function handleApiError(res, error, message)
+{
+    console.error(message, error.message);
+    res.status(500).json({ error: 'Error when requesting the API' });
+}
 
 function assertAllRequiredVariablesSet(port, apiKey)
 {

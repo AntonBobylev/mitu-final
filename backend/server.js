@@ -29,6 +29,16 @@ app.get(API, async (req, res) => {
     }
 });
 
+app.post(API, async (req, res) => {
+    try {
+        const newTask = todoList.add(req.body.text);
+        res.status(201).json(newTask);
+    } catch (error) {
+        console.error('Error when adding task', error.message);
+        res.status(500).json({ error: 'Error when requesting the API' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server listens port: ${PORT}`);
 })

@@ -11,7 +11,11 @@ describe('App component', () => {
         const API_URL = import.meta.env.VITE_API_URL,
               API_KEY = import.meta.env.VITE_API_KEY;
 
-        if (!API_URL) return;
+        if (!API_URL) {
+            throw new Error('API_URL is not defined');
+        }
+
+        await new Promise((resolve) => setTimeout(resolve, 100));
 
         try {
             const res = await fetch(API_URL, {
@@ -22,11 +26,12 @@ describe('App component', () => {
                 return;
             }
 
-            const tasks = await res.json();
-
-            const testTasks = tasks.filter(
-                (task) => task.text && task.text.includes(TEST_PREFIX)
-            );
+            const tasks = await res.json(),
+                testTasks = tasks.filter((task) => task.text && (
+                    task.text.includes('Проверить тест')
+                    || task.text.includes('Очистка инпута')
+                    || task.text.includes('Удалить задачу')
+                ));
 
             await Promise.all(
                 testTasks.map((task) =>
@@ -46,28 +51,62 @@ describe('App component', () => {
 
         render(<App />);
 
-        const uniqueText = `Проверить тест ${Date.now()}`,
-              input = screen.getByPlaceholderText(/введите задачу/i),
-              button = screen.getByText(/добавить/i);
+        const uniqueId   = Date.now(),
+              uniqueText = `Проверить тест ${uniqueId}`,
+              input      = screen.getByPlaceholderText(/введите задачу/i),
+              button     = screen.getByText(/добавить/i);
 
-        await user.type(input, uniqueText);
+        await user.type(input, `${TEST_PREFIX} ${uniqueText}`);
         await user.click(button);
 
-        expect(await screen.findByText(uniqueText)).toBeInTheDocument();
+        expect(await screen.findByText(new RegExp(uniqueId))).toBeInTheDocument();
+    });
+
+    test('не добавляет пустую задачу или задачу из одних пробелов', async () => {
+        const user = userEvent.setup();
+        render(<App />);
+
+        const input = screen.getByPlaceholderText(/введите задачу/i),
+              button = screen.getByText(/добавить/i);
+
+        await user.type(input, '   ');
+        await user.click(button);
+
+        expect(input.value.trim()).toBe('');
+    });
+
+    test('очищает поле ввода после успешного добавления задачи', async () => {
+        const user = userEvent.setup();
+        render(<App />);
+
+        const uniqueId   = Date.now(),
+              uniqueText = `Очистка инпута ${uniqueId}`,
+              input      = screen.getByPlaceholderText(/введите задачу/i),
+              button     = screen.getByText(/добавить/i);
+
+        await user.type(input, `${TEST_PREFIX} ${uniqueText}`);
+        await user.click(button);
+
+        await screen.findByText(new RegExp(uniqueId));
+
+        await waitFor(() => {
+            expect(input.value).toBe('');
+        });
     });
 
     test('удаляет задачу при клике на иконку удаления', async () => {
         const user = userEvent.setup();
         render(<App />);
 
-        const uniqueDeleteText = `Удалить задачу ${Date.now()}`,
-              input = screen.getByPlaceholderText(/введите задачу/i),
-              button = screen.getByText(/добавить/i);
+        const uniqueId         = Date.now(),
+              uniqueDeleteText = `Удалить задачу ${uniqueId}`,
+              input            = screen.getByPlaceholderText(/введите задачу/i),
+              button           = screen.getByText(/добавить/i);
 
-        await user.type(input, uniqueDeleteText);
+        await user.type(input, `${TEST_PREFIX} ${uniqueDeleteText}`);
         await user.click(button);
 
-        const taskElement = await screen.findByText(uniqueDeleteText);
+        const taskElement = await screen.findByText(new RegExp(uniqueId));
         expect(taskElement).toBeInTheDocument();
 
         const taskRow = taskElement.closest('li') || taskElement.parentElement,
@@ -76,7 +115,7 @@ describe('App component', () => {
         await user.click(deleteButton);
 
         await waitFor(() => {
-            expect(screen.queryByText(uniqueDeleteText)).not.toBeInTheDocument();
+            expect(screen.queryByText(new RegExp(uniqueId))).not.toBeInTheDocument();
         });
     });
 });

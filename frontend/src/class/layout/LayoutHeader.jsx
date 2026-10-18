@@ -1,7 +1,7 @@
 export default function LayoutHeader()
 {
     return (
-        <header className='layout-bar layout-section'>
+        <header>
             TodoList WEB-application
         </header>
     );

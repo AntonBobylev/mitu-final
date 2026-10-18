@@ -9,11 +9,6 @@ const PORT    = process.env.PORT,
 
 app.use(cors());
 app.use(express.json());
-app.use('/api/tasks', checkApiKey);
-
-app.listen(PORT, () => {
-    console.log(`Server listens port: ${PORT}`);
-})
 
 const checkApiKey = (request, result, next) => {
     const apiKey = request.headers['x-api-key'];
@@ -24,3 +19,9 @@ const checkApiKey = (request, result, next) => {
 
     next();
 }
+
+app.use('/api/tasks', checkApiKey);
+
+app.listen(PORT, () => {
+    console.log(`Server listens port: ${PORT}`);
+})

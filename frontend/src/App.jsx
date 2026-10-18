@@ -1,5 +1,8 @@
-import './index.css';
 import { useEffect, useState } from 'react';
+
+import './index.css';
+
+import LayoutFooter from './class/layout/LayoutFooter.jsx';
 
 function App()
 {
@@ -71,7 +74,7 @@ function App()
         <div className='wrapper'>
             <header className='header-footer layout-section'>header</header>
             <main className='layout-section'>main</main>
-            <footer className='header-footer layout-section'>footer</footer>
+            <LayoutFooter />
         </div>
     );
 }

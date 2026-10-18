@@ -6,8 +6,8 @@ function App()
     const [tasks, setTasks]           = useState([]),
           [inputValue, setInputValue] = useState('');
 
-    const API_URL                 = process.env.API_URL,
-          API_KEY                 = process.env.API_KEY,
+    const API_URL                 = import.meta.env.VITE_API_URL,
+          API_KEY                 = import.meta.env.VITE_API_KEY,
           API_KEY_IN_HEADERS_NAME = 'x-api-key';
 
     useEffect(() => {
@@ -69,9 +69,9 @@ function App()
 
     return (
         <div className='wrapper'>
-            <header>header</header>
-            <main>main</main>
-            <footer>footer</footer>
+            <header className='header-footer layout-section'>header</header>
+            <main className='layout-section'>main</main>
+            <footer className='header-footer layout-section'>footer</footer>
         </div>
     );
 }

@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import './index.css';
 
 import LayoutFooter from './class/layout/LayoutFooter.jsx';
+import LayoutHeader from './class/layout/LayoutHeader.jsx';
 
 function App()
 {
@@ -72,7 +73,7 @@ function App()
 
     return (
         <div className='wrapper'>
-            <header className='header-footer layout-section'>header</header>
+            <LayoutHeader />
             <main className='layout-section'>main</main>
             <LayoutFooter />
         </div>

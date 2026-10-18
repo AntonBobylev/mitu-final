@@ -51,6 +51,21 @@ function App()
         }
     }
 
+    const handleUpdateTask = async (id, newText) => {
+        try {
+            const response = await fetch(`${API_URL}/${id}`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json', 'x-api-key': API_KEY },
+                body: JSON.stringify({ text: newText })
+            });
+            const updated = await response.json();
+
+            setTasks(tasks.map((task) => task.id === id ? { ...task, text: updated.text } : task));
+        } catch (err) {
+            console.error('Error when updating:', err);
+        }
+    }
+
     return (
         <>
             // TODO: implement

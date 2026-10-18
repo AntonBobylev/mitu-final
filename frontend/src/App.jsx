@@ -1,3 +1,4 @@
+import './index.css';
 import { useEffect, useState } from 'react';
 
 function App()
@@ -67,9 +68,11 @@ function App()
     }
 
     return (
-        <>
-            // TODO: implement
-        </>
+        <div className='wrapper'>
+            <header>header</header>
+            <main>main</main>
+            <footer>footer</footer>
+        </div>
     );
 }
 

@@ -26,9 +26,18 @@ body {
     gap: var(--base-gap);
     flex-direction: column;
 
-    .header-footer {
-        border-bottom: 1px solid var(--base-border-color);
+    header, footer {
         height: 50px;
+        border-color: var(--base-border-color);
+    }
+
+    header {
+        border-bottom: 1px solid var(--base-border-color);
+        font-size: larger;
+        font-weight: 500;
+    }
+
+    footer {
         border-top: 1px solid var(--base-border-color);
     }
 

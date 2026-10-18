@@ -75,7 +75,13 @@ function App()
     return (
         <div className='wrapper'>
             <LayoutHeader />
-            <LayoutMain />
+            <LayoutMain tasks={tasks}
+                        inputValue={inputValue}
+                        setInputValue={setInputValue}
+                        onAddTask={handleAddTask}
+                        onDeleteTask={handleDeleteTask}
+                        onUpdateTask={handleUpdateTask}
+            />
             <LayoutFooter />
         </div>
     );

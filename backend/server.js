@@ -11,6 +11,10 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/tasks', checkApiKey);
 
+app.listen(PORT, () => {
+    console.log(`Server listens port: ${PORT}`);
+})
+
 const checkApiKey = (request, result, next) => {
     const apiKey = request.headers['x-api-key'];
 

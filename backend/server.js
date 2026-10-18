@@ -39,6 +39,19 @@ app.post(API, async (req, res) => {
     }
 });
 
+app.delete(API + '/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id),
+              deleted = todoList.delete(id);
+
+        res.sendStatus(204);
+    }
+    catch (error) {
+        console.error('Error when removing task', error.message);
+        res.status(500).json({ error: 'Error when requesting the API' });
+    }
+});
+
 app.listen(PORT, () => {
     console.log(`Server listens port: ${PORT}`);
 })

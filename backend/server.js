@@ -45,9 +45,24 @@ app.delete(API + '/:id', async (req, res) => {
               deleted = todoList.delete(id);
 
         res.sendStatus(204);
-    }
-    catch (error) {
+    } catch (error) {
         console.error('Error when removing task', error.message);
+        res.status(500).json({ error: 'Error when requesting the API' });
+    }
+});
+
+app.put(API + '/:id', async (req, res) => {
+    try {
+        const id = parseInt(req.params.id),
+              updatedTask = todoList.update(id, req.body.text);
+
+        if (!updatedTask) {
+            return res.status(404).json({ error: 'Task wasn\'t found' });
+        }
+
+        res.status(200).json(updatedTask);
+    } catch (error) {
+        console.error('Task update error', error.message);
         res.status(500).json({ error: 'Error when requesting the API' });
     }
 });

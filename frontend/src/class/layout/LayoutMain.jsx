@@ -4,6 +4,7 @@ import TaskFilters from '../tasks/TaskFilters.jsx';
 
 export default function LayoutMain({
     tasks,
+    rawTasksCount,
     onDeleteTask,
     onUpdateTask,
     onToggleTask,
@@ -11,7 +12,10 @@ export default function LayoutMain({
     setInputValue,
     onAddTask,
     filter,
-    setFilter
+    setFilter,
+    isLoading,
+    error,
+    refetch
 })
 {
     return (
@@ -21,11 +25,22 @@ export default function LayoutMain({
                            setInputValue={setInputValue}
                            onAddTask={onAddTask}
                 />
+
                 <TaskFilters filter={filter} setFilter={setFilter} />
+
+                {error && (
+                    <div className="error-banner">
+                        <span>⚠️ {error}</span>
+                        <button className="button retry-button" onClick={refetch}>Повторить</button>
+                    </div>
+                )}
+
                 <TaskList tasks={tasks}
+                          rawTasksCount={rawTasksCount}
                           onDeleteTask={onDeleteTask}
                           onUpdateTask={onUpdateTask}
                           onToggleTask={onToggleTask}
+                          isLoading={isLoading}
                 />
             </div>
         </main>

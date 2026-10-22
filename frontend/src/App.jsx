@@ -10,10 +10,14 @@ function App()
 {
     const {
         tasks,
+        rawTasksCount,
         inputValue,
         setInputValue,
         filter,
         setFilter,
+        isLoading,
+        error,
+        refetch,
         handleAddTask,
         handleDeleteTask,
         handleUpdateTask,
@@ -24,10 +28,14 @@ function App()
         <div className='wrapper'>
             <LayoutHeader />
             <LayoutMain tasks={tasks}
+                        rawTasksCount={rawTasksCount}
                         inputValue={inputValue}
                         setInputValue={setInputValue}
                         filter={filter}
                         setFilter={setFilter}
+                        isLoading={isLoading}
+                        error={error}
+                        refetch={refetch}
                         onAddTask={handleAddTask}
                         onDeleteTask={handleDeleteTask}
                         onUpdateTask={handleUpdateTask}

@@ -121,6 +121,42 @@ body {
                 }
             }
 
+            .error-banner {
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+                width: 100%;
+                padding: 10px 14px;
+                background-color: #fef2f2;
+                border: 1px solid #fecaca;
+                border-radius: 8px;
+                color: var(--danger-color);
+                font-size: 0.9rem;
+                text-align: center;
+                box-sizing: border-box;
+
+                .retry-button {
+                    background-color: white;
+                    color: var(--danger-color);
+                    border-color: #fecaca;
+                    align-self: center;
+                    padding: 4px 12px;
+
+                    &:hover {
+                        background-color: #fee2e2;
+                        border-color: var(--danger-color);
+                    }
+                }
+            }
+
+            .status-message {
+                text-align: center;
+                color: var(--text-muted);
+                font-size: 0.9rem;
+                padding: 20px 0;
+                width: 100%;
+            }
+
             .task-item-left {
                 display: flex;
                 align-items: center;

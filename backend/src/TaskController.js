@@ -1,5 +1,5 @@
 const express  = require('express'),
-      TodoList = require('./TodoList');
+    TodoList = require('./TodoList');
 
 class TaskController
 {
@@ -9,6 +9,12 @@ class TaskController
         this.router = express.Router();
 
         this.initRoutes();
+    }
+
+    // Вспомогательный метод для проверки текста задачи
+    isValidText(text)
+    {
+        return typeof text === 'string' && text.trim().length > 0;
     }
 
     initRoutes()
@@ -23,7 +29,14 @@ class TaskController
 
         this.router.post('/', async (req, res) => {
             try {
-                const newTask = this.todoList.add(req.body.text);
+                const { text } = req.body;
+
+                // Проверяем, что текст передан, является строкой и не состоит из одних пробелов
+                if (!this.isValidText(text)) {
+                    return res.status(400).json({ error: 'Invalid or missing task text' });
+                }
+
+                const newTask = this.todoList.add(text.trim());
                 res.status(201).json(newTask);
             } catch (error) {
                 this.handleApiError(res, error, 'Error when adding task');
@@ -43,7 +56,21 @@ class TaskController
         this.router.put('/:id', async (req, res) => {
             try {
                 const id = parseInt(req.params.id),
-                      updatedTask = this.todoList.update(id, req.body);
+                    { text, completed } = req.body;
+
+                if (text !== undefined && !this.isValidText(text)) {
+                    return res.status(400).json({ error: 'Invalid task text' });
+                }
+
+                if (completed !== undefined && typeof completed !== 'boolean') {
+                    return res.status(400).json({ error: 'Invalid completed status (must be boolean)' });
+                }
+
+                if (text === undefined && completed === undefined) {
+                    return res.status(400).json({ error: 'No valid fields provided for update' });
+                }
+
+                const updatedTask = this.todoList.update(id, req.body);
 
                 if (!updatedTask) {
                     return res.status(404).json({ error: 'Task wasn\'t found' });

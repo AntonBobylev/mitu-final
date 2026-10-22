@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-export default function TaskItem({ task, onDelete, onUpdate })
+export default function TaskItem({ task, onDelete, onUpdate, onToggle })
 {
     const [isEditing, setIsEditing] = useState(false);
     const [editText, setEditText] = useState(task.text);
@@ -54,7 +54,17 @@ export default function TaskItem({ task, onDelete, onUpdate })
                 </div>
             ) : (
                 <div className="task-item-wrapper">
-                    <div className="task-item-text">{task.text}</div>
+                    <div className="task-item-left">
+                        <input
+                            type="checkbox"
+                            checked={task.completed}
+                            onChange={() => onToggle(task.id)}
+                            className="task-checkbox"
+                        />
+                        <div className={`task-item-text ${task.completed ? 'completed' : ''}`}>
+                            {task.text}
+                        </div>
+                    </div>
                     <div className="task-item-actions">
                         <button className="button" onClick={() => handleEdit()}>✏️</button>
                         <button className="button" onClick={() => onDelete(task.id)}>🗑️</button>

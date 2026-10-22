@@ -14,8 +14,9 @@ class TodoList
     add(text)
     {
         const newTask = {
-            id:   this.nextId++,
-            text: text
+            id:        this.nextId++,
+            text:      text,
+            completed: false
         };
 
         this.tasks.push(newTask);
@@ -31,7 +32,7 @@ class TodoList
         return this.tasks.length < initialLength;
     }
 
-    update(id, text)
+    update(id, fields)
     {
         const taskIndex = this.tasks.findIndex(t => t.id === id);
 
@@ -39,7 +40,13 @@ class TodoList
             return null;
         }
 
-        this.tasks[taskIndex].text = text;
+        if (fields.text !== undefined) {
+            this.tasks[taskIndex].text = fields.text;
+        }
+
+        if (fields.completed !== undefined) {
+            this.tasks[taskIndex].completed = fields.completed;
+        }
 
         return this.tasks[taskIndex];
     }

@@ -12,9 +12,12 @@ function App()
         tasks,
         inputValue,
         setInputValue,
+        filter,
+        setFilter,
         handleAddTask,
         handleDeleteTask,
         handleUpdateTask,
+        handleToggleTask,
     } = useTasks();
 
     return (
@@ -23,9 +26,12 @@ function App()
             <LayoutMain tasks={tasks}
                         inputValue={inputValue}
                         setInputValue={setInputValue}
+                        filter={filter}
+                        setFilter={setFilter}
                         onAddTask={handleAddTask}
                         onDeleteTask={handleDeleteTask}
                         onUpdateTask={handleUpdateTask}
+                        onToggleTask={handleToggleTask}
             />
             <LayoutFooter />
         </div>

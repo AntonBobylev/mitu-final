@@ -1,7 +1,18 @@
 import TaskList from '../tasks/TaskList.jsx';
 import TaskAdder from '../tasks/TaskAdder.jsx';
+import TaskFilters from '../tasks/TaskFilters.jsx';
 
-export default function LayoutMain({tasks, onDeleteTask, onUpdateTask, inputValue, setInputValue, onAddTask})
+export default function LayoutMain({
+    tasks,
+    onDeleteTask,
+    onUpdateTask,
+    onToggleTask,
+    inputValue,
+    setInputValue,
+    onAddTask,
+    filter,
+    setFilter
+})
 {
     return (
         <main>
@@ -10,9 +21,11 @@ export default function LayoutMain({tasks, onDeleteTask, onUpdateTask, inputValu
                            setInputValue={setInputValue}
                            onAddTask={onAddTask}
                 />
+                <TaskFilters filter={filter} setFilter={setFilter} />
                 <TaskList tasks={tasks}
                           onDeleteTask={onDeleteTask}
                           onUpdateTask={onUpdateTask}
+                          onToggleTask={onToggleTask}
                 />
             </div>
         </main>

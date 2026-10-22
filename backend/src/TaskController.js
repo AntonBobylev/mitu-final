@@ -43,7 +43,7 @@ class TaskController
         this.router.put('/:id', async (req, res) => {
             try {
                 const id = parseInt(req.params.id),
-                      updatedTask = this.todoList.update(id, req.body.text);
+                      updatedTask = this.todoList.update(id, req.body);
 
                 if (!updatedTask) {
                     return res.status(404).json({ error: 'Task wasn\'t found' });

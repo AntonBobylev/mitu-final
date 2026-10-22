@@ -146,6 +146,15 @@ body {
 
                 input {
                     flex: 1;
+                    min-width: 0;
+                }
+
+                @media (max-width: 360px) {
+                    flex-direction: column;
+
+                    .add-button {
+                        width: 100%;
+                    }
                 }
             }
 
@@ -159,7 +168,6 @@ body {
                 max-height: calc(100vh - 250px);
                 padding-right: 4px;
 
-                /* Кастомный скроллбар */
                 &::-webkit-scrollbar {
                     width: 6px;
                 }
